@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from 'react'
 
 
-function Profile() {
+function Price() {
      const [user, setUser] = useState(null);
 
      const params = useParams();
@@ -23,6 +23,7 @@ function Profile() {
      }, [params.id]);
 
      if (!user) return <h1>Loading...</h1>
+     if (!user.name) return <h1>User not found</h1>
 
      return (
           <main>
@@ -35,4 +36,4 @@ function Profile() {
      )
 };
 
-export default Profile;
+export default Price;
