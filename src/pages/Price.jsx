@@ -3,37 +3,54 @@ import { useState, useEffect } from 'react'
 
 
 function Price() {
-     const [user, setUser] = useState(null);
-
-     const params = useParams();
-     console.log(params);
+     const apiKey = "56a5251a-d496-4fbf-a196-0d106650597a";
+     const { symbol } = useParams();
+     // const symbol = params.symbol;
+     const url = `http://rest-sandbox.coinapi.io/v1/exchangerate/${symbol}/USD?apikey=${apiKey}`;
+     const [coin, setCoin] = useState(null);
+     const getCoin = async() => {
+          try {
+               const response = await fetch(url);
+               const data = await response.json();
+               setCoin(data);
+          } catch (e) {
+               console.error(e);
+          }
+     };
 
      useEffect(() => {
-          const fetchUser = async () => {
-               try {
-                    const res = await fetch(`https://jsonplaceholder.typicode.com/users/${params.id}`)
-                    const data = await res.json();
-                    console.log(data)
-                    setUser(data)
-               } catch (e) {
-                    console.log(e)
-               }
-          };
-          fetchUser();
-     }, [params.id]);
+          getCoin();
+     }, [symbol]);
 
-     if (!user) return <h1>Loading...</h1>
-     if (!user.name) return <h1>User not found</h1>
+     if (!coin) return <h1>✨ Loading magic... ✨</h1>;
 
-     return (
-          <main>
-               <h1>Profile Page</h1>
+  return (
+    <div className="price-container">
+      <h1>
+        {coin.asset_id_base} / {coin.asset_id_quote}
+      </h1>
+      <h2>💰 {coin.rate} USD</h2>
+    </div>
+  );
 
-               <h2>Name: {user.name}</h2>
-               <h2>Username: {user.username}</h2>
-               <h2>Email: {user.email}</h2>
-          </main>
-     )
+     // const loaded = () => {
+     //      return (
+     //           <div>
+     //                <h1>
+     //                     {coin.asset_id_base}/{coin.asset_id_quote}
+     //                </h1>
+     //                <h2>
+     //                     {coin.rate}
+     //                </h2>
+     //           </div>
+     //      )
+     // };
+
+     // const loading = () => {
+     //      return <h1>Loading...</h1>
+     // }
+
+     // return coin && coin.rate ? loaded() : loading();
 };
 
 export default Price;

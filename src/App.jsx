@@ -1,11 +1,11 @@
-import Currencies from './pages/Currencies'
 import Main from './pages/Main'
 import Price from './pages/Price'
+import Currencies from './pages/Currencies'
 import { Routes, Route} from 'react-router-dom'
 
 import './App.css'
 import Nav from './components/Nav'
-import Footer from './components/Footer'
+// import Footer from './components/Footer'
 
 function App() {  
 
@@ -17,11 +17,11 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/currencies:id" element={<Currencies />} />
-        <Route path='/price/:symbol' element={<Price />} />
+        <Route path="/currencies" element={<Currencies />} />
+        <Route path="/price/:symbol" element={<Price />} />
       </Routes>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }
